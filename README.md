@@ -1,5 +1,5 @@
 # MDmyScripts
-### Generate a Markdown file with folder tree + contents (ideal for uploading scripts to LLMs)
+### Generate a Markdown file with folder tree + contents (ideal for uploading multiple scripts to LLMs)
 
 ## Features
 - Skips `.vs` and `.git` folders. 
@@ -11,7 +11,7 @@
 Download MDmyScripts.exe → Run in any folder → get a clean, ready-to-upload-to-ai file of all your scripts.
 
 ## Usage for sick ppl
-save as `.py` and run in any folder >> upload to ai
+save as `name.py` in any folder >> run with `./name.py` in terminal >> upload output file to ai for related questions
 ```
 import os
 
