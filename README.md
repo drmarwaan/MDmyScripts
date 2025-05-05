@@ -10,10 +10,14 @@
 ## Usage
 Download MDmyScripts.exe → Run in any folder → get a clean, ready-to-upload-to-ai file of all your scripts.
 
-## Usage for sick ppl
-save as `name.py` in any folder >> run with `./name.py` in terminal >> upload output file to ai for related questions
+## Usage for sick ppl (better options for fellows)
+save as `name.py` in any folder >> edit file extentions and folders to skip >> upload output file to ai for related questions
 ```
 import os
+
+# Configuration: Modify these to customize what to skip
+SKIP_DIRS = {".git", ".vs", ".vscode"}  # Directories to skip
+SKIP_FILE_EXTS = [".meta"]  # File extensions to skip
 
 def generate_tree_structure(start_path):
     tree_lines = []
@@ -23,8 +27,12 @@ def generate_tree_structure(start_path):
         for i, entry in enumerate(entries):
             full_path = os.path.join(path, entry)
 
-            # Skip .vs and .git directories
-            if os.path.isdir(full_path) and entry in [".vs", ".git"]:
+            # Skip directories in SKIP_DIRS
+            if os.path.isdir(full_path) and entry in SKIP_DIRS:
+                continue
+
+            # Skip files with extensions in SKIP_FILE_EXTS
+            if not os.path.isdir(full_path) and any(entry.endswith(ext) for ext in SKIP_FILE_EXTS):
                 continue
 
             is_last = i == len(entries) - 1
@@ -35,12 +43,12 @@ def generate_tree_structure(start_path):
                 walk(full_path, new_prefix)
 
     walk(start_path)
-    tree_lines = ["# tree", "```"] + tree_lines + ["```"]
+    tree_lines = ["# files", "```"] + tree_lines + ["```"]
     return "\n".join(tree_lines)
 
 def write_file_content(path, relative_path):
     try:
-        with open(path, 'r', encoding='utf-8') as f:
+        with open(path, "r", encoding="utf-8") as f:
             content = f.read()
         return f"\n# {relative_path}\n```\n{content}\n```\n"
     except Exception as e:
@@ -59,22 +67,22 @@ def main():
 
     # Generate and write the directory tree
     tree_output = generate_tree_structure(current_dir)
-    with open(output_path, 'w', encoding='utf-8') as out:
+    with open(output_path, "w", encoding="utf-8") as out:
         out.write(tree_output)
 
-    # Append file contents (excluding .vs directories)
+    # Append file contents (excluding skipped directories and file extensions)
     for root, dirs, files in os.walk(current_dir):
-        # Skip .vs directories
-        dirs[:] = [d for d in dirs if d != ".vs"]
+        # Skip directories in SKIP_DIRS
+        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
 
         for file in files:
-            if file == output_file:
+            if file == output_file or any(file.endswith(ext) for ext in SKIP_FILE_EXTS):
                 continue
             file_path = os.path.join(root, file)
             rel_path = os.path.relpath(file_path, current_dir)
             content = write_file_content(file_path, rel_path)
             if content:
-                with open(output_path, 'a', encoding='utf-8') as out:
+                with open(output_path, "a", encoding="utf-8") as out:
                     out.write(content)
 
 if __name__ == "__main__":
