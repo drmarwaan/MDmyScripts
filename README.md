@@ -18,6 +18,7 @@ import os
 # Configuration: Modify these to customize what to skip
 SKIP_DIRS = {".git", ".vs", ".vscode"}  # Directories to skip
 SKIP_FILE_EXTS = [".meta"]  # File extensions to skip
+SCRIPT_NAME = os.path.basename(__file__)  # Script's own filename
 
 def generate_tree_structure(start_path):
     tree_lines = []
@@ -31,9 +32,10 @@ def generate_tree_structure(start_path):
             if os.path.isdir(full_path) and entry in SKIP_DIRS:
                 continue
 
-            # Skip files with extensions in SKIP_FILE_EXTS
-            if not os.path.isdir(full_path) and any(entry.endswith(ext) for ext in SKIP_FILE_EXTS):
-                continue
+            # Skip files with extensions in SKIP_FILE_EXTS or the script itself
+            if not os.path.isdir(full_path):
+                if any(entry.endswith(ext) for ext in SKIP_FILE_EXTS) or entry == SCRIPT_NAME:
+                    continue
 
             is_last = i == len(entries) - 1
             tree_lines.append(f"{prefix}{'└──' if is_last else '├──'} {entry}")
@@ -76,7 +78,7 @@ def main():
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
 
         for file in files:
-            if file == output_file or any(file.endswith(ext) for ext in SKIP_FILE_EXTS):
+            if file == output_file or file == SCRIPT_NAME or any(file.endswith(ext) for ext in SKIP_FILE_EXTS):
                 continue
             file_path = os.path.join(root, file)
             rel_path = os.path.relpath(file_path, current_dir)
