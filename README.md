@@ -1,5 +1,5 @@
 # MDmyScripts
-### Generate a single Markdown file with folder tree + contents (ideal for uploading scripts to LLMs)
+### Generate a Markdown file with folder tree + contents (ideal for uploading scripts to LLMs)
 
 ## Features
 - Skips .vs, .git, and hidden system files
