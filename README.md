@@ -2,16 +2,16 @@
 ### Generate a Markdown file with folder tree + contents (ideal for uploading scripts to LLMs)
 
 ## Features
-- Skips .vs, .git, and hidden system files
-- Outputs contents of [FolderName].md with directory tree and full file contents
+- Skips `.vs`, `.git`, and hidden system files
+- Outputs contents of `[FolderName].md` with directory tree and full file contents
 - No installs required (standalone)
 - Structured for clarity for AI
 
 ## Usage
-Download MDmyScripts.exe → Run the executable in any folder → gets a clean, AI-ready backup in one click.
+Download MDmyScripts.exe → Run in any folder → gets a clean, ready-to-upload-to-ai file of all your scripts.
 
 ## Usage for sick ppl
-save as .py and run
+save as `.py` and run in any folder >> upload to ai
 ```
 import os
 
