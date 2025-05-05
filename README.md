@@ -17,7 +17,7 @@ import os
 
 # Configuration: Modify these to customize what to skip
 SKIP_DIRS = {".git", ".vs", ".vscode"}  # Directories to skip
-SKIP_FILE_EXTS = [".meta"]  # File extensions to skip
+SKIP_FILE_EXTS = [".meta", ".gitattributes", ".gitignore"]  # File extensions to skip
 SCRIPT_NAME = os.path.basename(__file__)  # Script's own filename
 
 def generate_tree_structure(start_path):
