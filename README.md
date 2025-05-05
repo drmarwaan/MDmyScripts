@@ -11,7 +11,7 @@
 Download MDmyScripts.exe → Run in any folder → get a clean, ready-to-upload-to-ai file of all your scripts.
 
 ## Usage for sick ppl (better options for fellows)
-save as `name.py` in any folder >> edit file extentions and folders to skip >> upload output file to ai for related questions
+save as `.py` in any folder >> edit file extentions and folders to skip >> run >> upload output file to ai for related questions
 ```
 import os
 
